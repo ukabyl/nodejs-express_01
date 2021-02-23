@@ -1,0 +1,23 @@
+{
+  "name": "express-practice",
+  "version": "1.0.0",
+  "description": "Learn express",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ukabyl/nodejs-express_01.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ukabyl/nodejs-express_01/issues"
+  },
+  "homepage": "https://github.com/ukabyl/nodejs-express_01#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
