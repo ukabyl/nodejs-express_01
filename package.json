@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/ukabyl/nodejs-express_01#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "express-handlebars": "^5.2.1",
+    "nodemon": "^2.0.7"
   }
 }
