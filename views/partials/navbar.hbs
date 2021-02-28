@@ -1,0 +1,19 @@
+<nav class="uk-navbar-container" uk-navbar="boundary-align: true; align: center;">
+    <div class="uk-navbar-left">
+    </div>
+
+    <div class="uk-navbar-right">
+        <ul class="uk-navbar-nav">
+            <li {{#isHome}}class="uk-active"{{/isHome}}>
+                <a href="/">Home</a>
+            </li>
+            <li {{#isCourses}}class="uk-active"{{/isCourses}}>
+                <a href="/courses">Courses</a>
+            </li>
+            <li {{#isAddCourse}}class="uk-active"{{/isAddCourse}}>
+                <a href="/add-course">Add course</a>
+            </li>
+        </ul>
+    </div>
+
+</nav>
