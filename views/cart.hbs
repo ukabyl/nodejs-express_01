@@ -1,0 +1,30 @@
+<h1>Cart</h1>
+
+{{#if courses.length}}
+  <table class="uk-table uk-table-striped">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Price</th>
+        <th>Count</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each courses}}
+        <tr>
+          <td>{{title}}</td>
+          <td class="price">{{price}}</td>
+          <td>{{count}}</td>
+          <td>
+            <button class="uk-button uk-button-danger deleteFromCart" data-id="{{id}}">Delete</button>
+          </td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+
+  <p>Total price: <span class="price">{{price}}</span></p>
+{{else}}
+  <p>Your have empty cart</p>
+{{/if}}
