@@ -1,17 +1,20 @@
 <div class="uk-container">
-  <article class="uk-article">
+  <div class="uk-padding-small">
+      <a href="/courses" class="uk-button uk-button-secondary"><span uk-icon="icon: arrow-left"></span><span>Back to courses</span></a>
+  </div>
+  <div class="uk-flex uk-flex-center uk-text-center uk-padding">
+    <article class="uk-article">
 
-    <h1 class="uk-article-title">{{course.title}}</h1>
-    <img src="{{course.img}}" alt="{{course.title}}">
+        <h1 class="uk-article-title">{{course.title}}</h1>
+        <img src="{{course.img}}" width="500px" alt="{{course.title}}">
 
-    <p class="uk-article-meta">Created at <span class="date">{{price.created}}</span>.
+        <p class="uk-article-meta">Created at <span class="date">{{price.created}}</span>.
 
 
-    <div class="uk-grid-small uk-child-width-auto" uk-grid>
         <div class="price">
             {{course.price}}
         </div>
-    </div>
 
-</article>
+    </article>
+  </div>
 </div>
