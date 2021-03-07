@@ -1,9 +1,9 @@
 const {model, Schema} = require('mongoose');
 
-const course = Schema({
-  title: { type: String, require: true},
-  price: { type: String, require: true},
-  img: { type: String, require: false},
+const courseSchema = Schema({
+  title: { type: String, required: true},
+  price: { type: String, required: true},
+  img: { type: String, required: false},
 });
 
-module.exports = model('Course', course);
+module.exports = model('Course', courseSchema);
