@@ -3,7 +3,7 @@ const Course = require('../models/course');
 const router = Router();
 
 router.get('/', async (req, res) => {
-  const courses = await Course.getAll();
+  const courses = await Course.find();
 
   res.render('courses', {
     title: 'Courses',
@@ -13,7 +13,7 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/:id', async (req, res) => {
-  const course = await Course.getById(req.params.id);
+  const course = await Course.findById(req.params.id);
   res.render('course', {
     layout: 'empty',
     title: `Course - ${course ? course.title : ''}`,
@@ -23,7 +23,7 @@ router.get('/:id', async (req, res) => {
 
 router.get('/:id/edit', async (req, res) => {
   if (req.query.allow) {
-    const course = await Course.getById(req.params.id);
+    const course = await Course.findById(req.params.id);
 
     res.render('editCourse', {
       title: `Edit course - ${course ? course.title : ''}`,
@@ -34,7 +34,9 @@ router.get('/:id/edit', async (req, res) => {
 });
 
 router.post('/edit', async (req, res) => {
-  await Course.update(req.body);
+  const { id } = req.body;
+  delete req.body.id;
+  await Course.findByIdAndUpdate(id, req.body);
   res.redirect('/courses');
 });
 

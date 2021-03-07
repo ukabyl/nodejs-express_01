@@ -11,10 +11,17 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-  const course = new Course(req.body.title, req.body.price, req.body.img);
-
-  course.save();
-  res.redirect('/courses');
+  try {
+    const course = new Course({
+      title: req.body.title,
+      price: req.body.price,
+      img: req.body.img
+    });
+    course.save();
+    res.redirect('/courses');
+  } catch(e) {
+    console.log(e);
+  }
 });
 
 module.exports = router;

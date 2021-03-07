@@ -1,4 +1,5 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const path = require('path');
 const exphbs = require('express-handlebars');
 
@@ -10,7 +11,11 @@ const cartRoutes = require('./routes/cart');
 const app = express();
 const hbs = exphbs.create({
   extname: 'hbs',
-  defaultLayout: 'main'
+  defaultLayout: 'main',
+  runtimeOptions: {
+    allowProtoPropertiesByDefault: true,
+    allowProtoMethodsByDefault: true
+  }
 });
 
 app.engine('hbs', hbs.engine);
@@ -27,6 +32,17 @@ app.use('/cart', cartRoutes);
 
 const PORT = process.argv.PORT | 3000;
 
-app.listen(PORT, () => {
-  console.log(`Server is runnig ${PORT}`);
-});
+async function start() {
+  try {
+    const url = `mongodb+srv://ukabyl:Umirzak123123@cluster0.xpxu8.mongodb.net/db`;
+    await mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true});
+  
+    app.listen(PORT, () => {
+      console.log(`Server is runnig ${PORT}`);
+    });
+  } catch(e) {
+    console.log(e);
+  }
+}
+
+start();
