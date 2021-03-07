@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
 const exphbs = require('express-handlebars');
+require('dotenv').config()
 
 const homeRoutes = require('./routes/home');
 const coursesRoutes = require('./routes/courses');
@@ -32,9 +33,11 @@ app.use('/cart', cartRoutes);
 
 const PORT = process.argv.PORT | 3000;
 
+console.log(process.env.PASSWORD)
+
 async function start() {
   try {
-    const url = `mongodb+srv://ukabyl:Umirzak123123@cluster0.xpxu8.mongodb.net/db`;
+    const url = `mongodb+srv://ukabyl:${process.env.PASSWORD}@cluster0.xpxu8.mongodb.net/db`;
     await mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false});
   
     app.listen(PORT, () => {
