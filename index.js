@@ -1,8 +1,9 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
 const exphbs = require('express-handlebars');
-require('dotenv').config()
+const User = require('./models/user');
 
 const homeRoutes = require('./routes/home');
 const coursesRoutes = require('./routes/courses');
@@ -23,6 +24,16 @@ app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
 app.set('views', 'views');
 
+app.use(async (req, res, next) => {
+  try {
+    const user = await User.findById('6044bdd0b503804df5e3186d');
+    req.user = user;
+    next();
+  } catch(e) {
+    console.log(e);
+  }
+});
+
 app.use(express.static(__dirname + '/public'));
 app.use(express.urlencoded({extended: true}));
 
@@ -33,13 +44,23 @@ app.use('/cart', cartRoutes);
 
 const PORT = process.argv.PORT | 3000;
 
-console.log(process.env.PASSWORD)
-
 async function start() {
   try {
     const url = `mongodb+srv://ukabyl:${process.env.PASSWORD}@cluster0.xpxu8.mongodb.net/db`;
     await mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false});
-  
+
+    const candidate = await User.findOne();
+
+    if (!candidate) {
+      const user = new User({
+        email: 'ukabylbeko@mail.ru',
+        name: 'Umirzak',
+        cart: {items: []}
+      });
+
+      await user.save();
+    }
+
     app.listen(PORT, () => {
       console.log(`Server is runnig ${PORT}`);
     });
