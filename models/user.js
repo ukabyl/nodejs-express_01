@@ -23,8 +23,7 @@ const userSchema = Schema({
           required: true
         }
       }
-    ],
-    price: Number
+    ]
   }
 });
 
@@ -39,6 +38,20 @@ userSchema.methods.addToCart = function(course) {
       courseId: course._id,
       count: 1
     })
+  }
+
+  this.cart = {items};
+  return this.save();
+}
+
+userSchema.methods.removeFromCart = function(id) {
+  let items = [...this.cart.items];
+  const idx = items.findIndex(c => c.courseId.toString() === id.toString());
+
+  if (items[idx].count === 1) {
+    items = items.filter(item => item.courseId.toString() !== id.toString())
+  } else {
+    items[idx].count--;
   }
 
   this.cart = {items};
