@@ -3,8 +3,32 @@ const Course = require('../models/course');
 
 const router = Router();
 
+function mapCartItems(cart) {
+  return cart.items.map((c) => ({
+    ...c.courseId._doc,
+    count: c.count
+  }))
+}
+
+function computeCartCoursesPirce(courses) {
+  return courses.reduce((total, course) => {
+    return total += course.price * course.count;
+  }, 0)
+}
+
 router.get('/', async (req, res) => {
-  res.json({test: true});
+  const user = await req.user
+    .populate('cart.items.courseId')
+    .execPopulate();
+
+  const courses = mapCartItems(user.cart);
+
+  res.render('cart', {
+    title: 'Courses',
+    isCourses: true,
+    courses: courses,
+    price: computeCartCoursesPirce(courses)
+  });
 });
 
 router.post('/', async (req, res) => {
