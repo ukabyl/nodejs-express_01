@@ -26,6 +26,9 @@
     </table>
 
     <p>Total price: <span class="total-price price">{{price}}</span></p>
+    <form action="/orders" method="POST">
+      <button class="uk-button uk-button-primary">Order</button>
+    </form>
   {{else}}
     <p>Your have empty cart</p>
   {{/if}}

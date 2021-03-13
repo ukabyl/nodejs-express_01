@@ -9,6 +9,7 @@ const homeRoutes = require('./routes/home');
 const coursesRoutes = require('./routes/courses');
 const addCourseRoutes = require('./routes/addCourse');
 const cartRoutes = require('./routes/cart');
+const ordersRoutes = require('./routes/orders');
 
 const app = express();
 const hbs = exphbs.create({
@@ -41,6 +42,7 @@ app.use('/', homeRoutes);
 app.use('/courses', coursesRoutes);
 app.use('/addCourse', addCourseRoutes);
 app.use('/cart', cartRoutes);
+app.use('/orders', ordersRoutes);
 
 const PORT = process.argv.PORT | 3000;
 
