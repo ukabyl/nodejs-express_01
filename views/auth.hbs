@@ -1,0 +1,61 @@
+<div class="uk-child-width-expand@s uk-text-center uk-margin-medium-top" uk-grid>
+    <div>
+        <div class="uk-card uk-card-default uk-card-body">
+          <ul uk-tab>
+              <li class="uk-active"><a href="#">Login</a></li>
+              <li><a href="#">Register</a></li>
+          </ul>
+
+          <ul class="uk-switcher">
+              <li class="uk-padding">
+                <h2>Login</h2>
+                <div class="uk-child-width-1-2 uk-flex uk-flex-center">
+                  <form method="POST" action="/auth/login">
+                    <fieldset class="uk-fieldset">
+                        <div class="uk-margin">
+                            <label class="uk-form-label" for="form-email">Email</label>
+                            <input class="uk-input" required type="text" name="email" id="form-email">
+                        </div>
+
+                        <div class="uk-margin">
+                            <label class="uk-form-label" for="form-password">Password</label>
+                            <input class="uk-input" required type="text" name="password" id="form-password">
+                        </div>
+
+                        <button type="submit" class="uk-button uk-button-primary">Login</button>
+
+                    </fieldset>
+                  </form>
+                </div>
+              </li>
+              <li class="uk-padding">
+                <h2>Register</h2>
+
+                <div class="uk-child-width-1-2 uk-flex uk-flex-center">
+                  <form method="POST" action="/auth/register">
+                    <fieldset class="uk-fieldset">
+                        <div class="uk-margin">
+                            <label class="uk-form-label" for="form-remail">Email</label>
+                            <input class="uk-input" required type="text" name="email" id="form-remail">
+                        </div>
+
+                        <div class="uk-margin">
+                            <label class="uk-form-label" for="form-rpassword">Password</label>
+                            <input class="uk-input" required type="text" name="password" id="form-rpassword">
+                        </div>
+
+                        <div class="uk-margin">
+                            <label class="uk-form-label" for="form-confirm">Confirm password</label>
+                            <input class="uk-input" required type="text" name="confirm" id="form-confirm">
+                        </div>
+
+                        <button type="submit" class="uk-button uk-button-primary">Register</button>
+
+                    </fieldset>
+                  </form>
+                </div>
+              </li>
+          </ul>
+        </div>
+    </div>
+</div>

@@ -12,8 +12,8 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.date').forEach(node => {
     node.textContent = new Intl.DateTimeFormat('en-US', {
       year: 'numeric', month: 'numeric', day: 'numeric',
-      hour: 'numeric', minute: 'numeric', second: 'numeric',
-    }).format(node.textContent);
+      hour: 'numeric'
+    }).format(new Date(node.textContent));
   });
   
 
