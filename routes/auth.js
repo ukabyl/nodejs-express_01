@@ -1,4 +1,5 @@
 const { Router } = require('express');
+const User = require('../models/user');
 const router = Router();
 
 router.get('/login', (req, res) => {
@@ -15,11 +16,16 @@ router.get('/logout', (req, res) => {
   });
 });
 
-router.post('/login', (req, res) => {
-  const { email, password } = req.body
-
+router.post('/login', async (req, res) => {
+  const { email, password } = req.body;
+  const user = await User.findById('604bd547fef68676b090468c');
+  req.session.user = user;
   req.session.isAuthenticated = true;
-  res.redirect('/');
+
+  req.session.save(err => {
+    if (err) throw err
+    res.redirect('/');
+  })
 });
 
 router.post('/register', (req, res) => {
