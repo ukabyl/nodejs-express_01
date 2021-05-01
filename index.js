@@ -4,6 +4,8 @@ const mongoose = require('mongoose');
 const path = require('path');
 const exphbs = require('express-handlebars');
 const User = require('./models/user');
+const session = require('express-session');
+const varialbesMiddleware = require('./middleware/variables');
 
 const homeRoutes = require('./routes/home');
 const coursesRoutes = require('./routes/courses');
@@ -38,6 +40,12 @@ app.use(async (req, res, next) => {
 
 app.use(express.static(__dirname + '/public'));
 app.use(express.urlencoded({extended: true}));
+app.use(session({
+  secret: 'secret',
+  resave: false,
+  saveUninitialized: false,
+}));
+app.use(varialbesMiddleware);
 
 app.use('/', homeRoutes);
 app.use('/courses', coursesRoutes);

@@ -7,21 +7,27 @@
             <li {{#isHome}}class="uk-active"{{/isHome}}>
                 <a href="/">Home</a>
             </li>
-            <li {{#isCourses}}class="uk-active"{{/isCourses}}>
-                <a href="/courses">Courses</a>
-            </li>
-            <li {{#isAddCourse}}class="uk-active"{{/isAddCourse}}>
-                <a href="/addCourse">Add course</a>
-            </li>
-            <li {{#isCart}}class="uk-active"{{/isCart}}>
-                <a href="/cart">Cart</a>
-            </li>
-            <li {{#isOrders}}class="uk-active"{{/isOrders}}>
-                <a href="/orders">Orders</a>
-            </li>
-            <li {{#isLogin}}class="uk-active"{{/isLogin}}>
-                <a href="/auth/login">Login</a>
-            </li>
+            {{#if isAuth}}
+                <li {{#isCourses}}class="uk-active"{{/isCourses}}>
+                    <a href="/courses">Courses</a>
+                </li>
+                <li {{#isAddCourse}}class="uk-active"{{/isAddCourse}}>
+                    <a href="/addCourse">Add course</a>
+                </li>
+                <li {{#isCart}}class="uk-active"{{/isCart}}>
+                    <a href="/cart">Cart</a>
+                </li>
+                <li {{#isOrders}}class="uk-active"{{/isOrders}}>
+                    <a href="/orders">Orders</a>
+                </li>
+                <li>
+                    <a href="/auth/logout">Logout</a>
+                </li>
+            {{else}}
+                <li {{#isLogin}}class="uk-active"{{/isLogin}}>
+                    <a href="/auth/login">Login</a>
+                </li>
+            {{/if}}
         </ul>
     </div>
 

@@ -8,10 +8,18 @@ router.get('/login', (req, res) => {
   })
 });
 
+
+router.get('/logout', (req, res) => {
+  req.session.destroy(() => {
+    res.redirect('/auth/login');
+  });
+});
+
 router.post('/login', (req, res) => {
   const { email, password } = req.body
-  console.log(email, password, 'LOGIN');
-  res.status(200);
+
+  req.session.isAuthenticated = true;
+  res.redirect('/');
 });
 
 router.post('/register', (req, res) => {
