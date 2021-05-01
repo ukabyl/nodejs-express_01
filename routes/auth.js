@@ -28,10 +28,25 @@ router.post('/login', async (req, res) => {
   })
 });
 
-router.post('/register', (req, res) => {
-  const { email, password } = req.body
-  console.log(email, password, 'REGISTER');
-  res.status(200);
+router.post('/register', async (req, res) => {
+  try {
+    const { email, password, name, confirm } = req.body;
+
+    const candidate = await User.findOne({ email });
+
+    if (candidate) {
+      res.redirect('/auth/login#register');
+    } else {
+      const user = new User({
+        email, name, password, cart: { items: [] }
+      });
+
+      await user.save();
+      res.redirect('/auth/login');
+    }
+  } catch(e) {
+    console.log(e);
+  }
 });
 
 module.exports = router;
