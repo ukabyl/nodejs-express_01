@@ -7,10 +7,10 @@
             <li {{#isHome}}class="uk-active"{{/isHome}}>
                 <a href="/">Home</a>
             </li>
-            {{#if isAuth}}
-                <li {{#isCourses}}class="uk-active"{{/isCourses}}>
+            <li {{#isCourses}}class="uk-active"{{/isCourses}}>
                     <a href="/courses">Courses</a>
                 </li>
+            {{#if isAuth}}
                 <li {{#isAddCourse}}class="uk-active"{{/isAddCourse}}>
                     <a href="/addCourse">Add course</a>
                 </li>

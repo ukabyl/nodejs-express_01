@@ -20,11 +20,13 @@
             </div>
             <div class="uk-card-footer uk-margin-auto-top">
                 <a href="/courses/{{id}}" class="uk-button uk-button-text">Read more</a>
-                <a href="/courses/{{id}}/edit?allow=true" class="uk-margin-left uk-button uk-button-text">Edit</a>
-                <form action="/cart" method="POST" class="uk-flex uk-flex-end uk-margin-top">
-                  <input type="text" name="id" value="{{id}}" hidden>
-                  <button type="submit" class="uk-button uk-button-primary">Add to cart</button>
-                </form>
+                {{#if @root.isAuth}}
+                  <a href="/courses/{{id}}/edit?allow=true" class="uk-margin-left uk-button uk-button-text">Edit</a>
+                  <form action="/cart" method="POST" class="uk-flex uk-flex-end uk-margin-top">
+                    <input type="text" name="id" value="{{id}}" hidden>
+                    <button type="submit" class="uk-button uk-button-primary">Add to cart</button>
+                  </form>
+                {{/if}}
             </div>
         </div>
       </div>

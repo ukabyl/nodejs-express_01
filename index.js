@@ -5,6 +5,7 @@ const path = require('path');
 const exphbs = require('express-handlebars');
 const User = require('./models/user');
 const session = require('express-session');
+const MongoStore = require('connect-mongodb-session')(session);
 const varialbesMiddleware = require('./middleware/variables');
 
 const homeRoutes = require('./routes/home');
@@ -13,6 +14,13 @@ const addCourseRoutes = require('./routes/addCourse');
 const cartRoutes = require('./routes/cart');
 const ordersRoutes = require('./routes/orders');
 const authRoutes = require('./routes/auth');
+
+const MONGO_URI  = `mongodb+srv://ukabyl:${process.env.PASSWORD}@cluster0.xpxu8.mongodb.net/db`;
+
+const store = MongoStore({
+  collection: 'sessions',
+  uri: MONGO_URI
+});
 
 const app = express();
 const hbs = exphbs.create({
@@ -34,6 +42,7 @@ app.use(session({
   secret: 'secret',
   resave: false,
   saveUninitialized: false,
+  store,
 }));
 app.use(varialbesMiddleware);
 
@@ -48,8 +57,7 @@ const PORT = process.argv.PORT | 3000;
 
 async function start() {
   try {
-    const url = `mongodb+srv://ukabyl:${process.env.PASSWORD}@cluster0.xpxu8.mongodb.net/db`;
-    await mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false});
+    await mongoose.connect(MONGO_URI, {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false});
 
     app.listen(PORT, () => {
       console.log(`Server is runnig ${PORT}`);
