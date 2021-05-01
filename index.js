@@ -7,6 +7,7 @@ const User = require('./models/user');
 const session = require('express-session');
 const MongoStore = require('connect-mongodb-session')(session);
 const varialbesMiddleware = require('./middleware/variables');
+const userMiddleware = require('./middleware/user');
 
 const homeRoutes = require('./routes/home');
 const coursesRoutes = require('./routes/courses');
@@ -45,6 +46,7 @@ app.use(session({
   store,
 }));
 app.use(varialbesMiddleware);
+app.use(userMiddleware);
 
 app.use('/', homeRoutes);
 app.use('/courses', coursesRoutes);

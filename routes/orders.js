@@ -8,7 +8,7 @@ router.get('/', authMiddleware, async (req, res) => {
     'user.id': req.user._id
   });
 
-  res.render('orders', authMiddleware, {
+  res.render('orders', {
     title: 'Orders',
     isOrders: true,
     orders: orders.map(o => {
