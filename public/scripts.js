@@ -56,5 +56,10 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+
+  let index = 0;
+  if (location.hash.substr(1) === 'register') index = 1;
+  UIkit.switcher(document.querySelector('.uk-tab')).show(index);
+
 });
 

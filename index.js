@@ -1,14 +1,13 @@
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
-const path = require('path');
 const exphbs = require('express-handlebars');
-const User = require('./models/user');
 const session = require('express-session');
 const MongoStore = require('connect-mongodb-session')(session);
 const varialbesMiddleware = require('./middleware/variables');
 const userMiddleware = require('./middleware/user');
 const csrf = require('csurf');
+const flash = require('connect-flash');
 
 const homeRoutes = require('./routes/home');
 const coursesRoutes = require('./routes/courses');
@@ -47,6 +46,7 @@ app.use(session({
   store,
 }));
 app.use(csrf());
+app.use(flash());
 app.use(varialbesMiddleware);
 app.use(userMiddleware);
 

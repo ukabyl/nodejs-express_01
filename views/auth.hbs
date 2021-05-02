@@ -1,16 +1,22 @@
 <div class="uk-child-width-expand@s uk-text-center uk-margin-medium-top" uk-grid>
     <div>
         <div class="uk-card uk-card-default uk-card-body">
-          <ul uk-tab>
+          <ul class="uk-tab" uk-tab>
               <li class="uk-active"><a href="#login">Login</a></li>
               <li><a href="#register">Register</a></li>
           </ul>
 
           <ul class="uk-switcher">
-              <li class="uk-padding">
+              <li id="login" class="uk-padding">
                 <h2>Login</h2>
                 <div class="uk-child-width-1-2 uk-flex uk-flex-center">
                   <form method="POST" action="/auth/login">
+                    {{#if loginError}}
+                      <div class="uk-alert-danger" uk-alert>
+                          <a class="uk-alert-close" uk-close></a>
+                          <p>{{loginError}}</p>
+                      </div>
+                    {{/if}}
                     <fieldset class="uk-fieldset">
                         <div class="uk-margin">
                             <label class="uk-form-label" for="form-email">Email</label>
@@ -30,18 +36,24 @@
                   </form>
                 </div>
               </li>
-              <li class="uk-padding">
+              <li id="register" class="uk-padding">
                 <h2>Register</h2>
-
                 <div class="uk-child-width-1-2 uk-flex uk-flex-center">
                   <form method="POST" action="/auth/register">
+                    {{#if registerError}}
+                      <div class="uk-alert-danger" uk-alert>
+                          <a class="uk-alert-close" uk-close></a>
+                          <p>{{registerError}}</p>
+                      </div>
+                    {{/if}}
+                    
                     <fieldset class="uk-fieldset">
                         <div class="uk-margin">
                             <label class="uk-form-label" for="form-remail">Email</label>
                             <input class="uk-input" required type="text" name="email" id="form-remail">
                         </div>
 
-                         <div class="uk-margin">
+                        <div class="uk-margin">
                             <label class="uk-form-label" for="form-name">Name</label>
                             <input class="uk-input" required type="text" name="name" id="form-name">
                         </div>
