@@ -21,6 +21,7 @@
         </div>
 
         <input type="text" hidden name="id" value="{{course.id}}">
+        <input type="text" hidden name="_csrf" value="{{csrf}}">
 
         <button type="submit" class="uk-button uk-button-primary">Edit</button>
 
@@ -29,5 +30,6 @@
 
 <form action="/courses/delete" method="POST" class="uk-margin-top">
     <input type="text" hidden name="id" value="{{course.id}}">
+    <input type="text" hidden name="_csrf" value="{{csrf}}">
     <button type="submit" class="uk-button uk-button-danger">Delete</button>
 </form>

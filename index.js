@@ -8,6 +8,7 @@ const session = require('express-session');
 const MongoStore = require('connect-mongodb-session')(session);
 const varialbesMiddleware = require('./middleware/variables');
 const userMiddleware = require('./middleware/user');
+const csrf = require('csurf');
 
 const homeRoutes = require('./routes/home');
 const coursesRoutes = require('./routes/courses');
@@ -45,6 +46,7 @@ app.use(session({
   saveUninitialized: false,
   store,
 }));
+app.use(csrf());
 app.use(varialbesMiddleware);
 app.use(userMiddleware);
 

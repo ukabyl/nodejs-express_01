@@ -22,6 +22,8 @@
                             <input class="uk-input" required type="password" name="password" id="form-password">
                         </div>
 
+                        <input type="text" hidden name="_csrf" value="{{csrf}}">
+
                         <button type="submit" class="uk-button uk-button-primary">Login</button>
 
                     </fieldset>
@@ -53,6 +55,8 @@
                             <label class="uk-form-label" for="form-confirm">Confirm password</label>
                             <input class="uk-input" required type="password" name="confirm" id="form-confirm">
                         </div>
+
+                        <input type="text" hidden name="_csrf" value="{{csrf}}">
 
                         <button type="submit" class="uk-button uk-button-primary">Register</button>
 

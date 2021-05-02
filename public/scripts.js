@@ -27,7 +27,10 @@ document.addEventListener('DOMContentLoaded', () => {
     cartContent.addEventListener('click', (e) => {
       if (e.target.classList.contains('deleteFromCart')) {
         fetch(`/cart/${e.target.dataset.id}/delete`, {
-          method: 'DELETE'
+          method: 'DELETE',
+          headers: {
+            'X-XSRF-TOKEN': e.target.dataset.csrf
+          }
         })
           .then(res => res.json())
           .then(cart => {
