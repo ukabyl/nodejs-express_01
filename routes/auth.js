@@ -1,5 +1,6 @@
 const { Router } = require('express');
 const bcrypt = require('bcryptjs');
+const crypto = require('crypto');
 const User = require('../models/user');
 const router = Router();
 const nodemailer = require('nodemailer');
@@ -7,6 +8,7 @@ const transport = require('nodemailer-sendgrid-transport');
 const keys = require('../keys');
 
 const registerMail = require('../mails/registration');
+const resetMail = require('../mails/reset');
 
 let mailer = nodemailer.createTransport(transport({
   auth: {
@@ -23,12 +25,42 @@ router.get('/login', (req, res) => {
   })
 });
 
-
 router.get('/logout', (req, res) => {
   req.session.destroy(() => {
     res.redirect('/auth/login');
   });
 });
+
+router.get('/reset', (req, res) => {
+  res.render('reset', {
+    title: 'Forget password',
+    error: req.flash('error'),
+    success: req.flash('success'),
+  })
+})
+
+router.get('/password/:token', async (req, res) => {
+  try {
+    const user = await User.findOne({
+      resetToken: req.params.token,
+      resetTokenExp: {$gt: Date.now()}
+    });
+
+    if (!user) {
+      res.redirect('/auth/login');
+    } else {
+      res.render('password', {
+        title: 'Change password',
+        error: req.flash('error'),
+        userId: user._id.toString(),
+        token: req.params.token
+      });
+    }
+
+  } catch(e) {
+    console.log(e);
+  }
+})
 
 router.post('/login', async (req, res) => {
   try {
@@ -80,6 +112,65 @@ router.post('/register', async (req, res) => {
       res.redirect('/auth/login');
       await mailer.sendMail(registerMail(email));
     }
+  } catch(e) {
+    console.log(e);
+  }
+});
+
+router.post('/reset', (req, res) => {
+  try {
+    crypto.randomBytes(10, async (err, buffer) => {
+      if (err) {
+        req.flash('error', 'Somethis went wrong. Please check it out later!');
+        return res.redirect('/auth/reset');
+      }
+      const token = buffer.toString('hex');
+  
+      try {
+        const candidate = await User.findOne({
+          email: req.body.email,
+        });
+  
+        if (candidate) {
+          candidate.resetToken = token;
+          candidate.resetTokenExp = Date.now() + 60 * 60 * 1000;
+          await candidate.save();
+          await mailer.sendMail(resetMail(candidate.email, token));
+          req.flash('success', 'We send your email the further instructions to follow. Please check your email!');
+          res.redirect('/auth/reset');
+        } else {
+          req.flash('error', 'Ooops... User is not found!');
+          res.redirect('/auth/reset');
+        }
+      } catch(e) {
+        console.log(e);
+      }
+    });
+  } catch(e) {
+    console.log(e);
+  }
+})
+
+router.post('/change-password', async (req, res) => {
+  try {
+    const user = await User.findOne({
+      _id: req.body.userId,
+      resetToken: req.body.token,
+      resetTokenExp: {$gt: Date.now()}
+    });
+
+    if (!user) {
+      res.redirect('/auth/login');
+    } else {
+      user.password = await bcrypt.hash(req.body.password, 10);
+      user.resetToken = undefined;
+      user.resetTokenExp = undefined;
+
+      await user.save();
+
+      res.redirect('/auth/login');
+    }
+
   } catch(e) {
     console.log(e);
   }
