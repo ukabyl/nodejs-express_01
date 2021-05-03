@@ -15,12 +15,11 @@ const addCourseRoutes = require('./routes/addCourse');
 const cartRoutes = require('./routes/cart');
 const ordersRoutes = require('./routes/orders');
 const authRoutes = require('./routes/auth');
-
-const MONGO_URI  = `mongodb+srv://ukabyl:${process.env.PASSWORD}@cluster0.xpxu8.mongodb.net/db`;
+const keys = require('./keys');
 
 const store = MongoStore({
   collection: 'sessions',
-  uri: MONGO_URI
+  uri: keys.MONGO_URI
 });
 
 const app = express();
@@ -40,7 +39,7 @@ app.set('views', 'views');
 app.use(express.static(__dirname + '/public'));
 app.use(express.urlencoded({extended: true}));
 app.use(session({
-  secret: 'secret',
+  secret: keys.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
   store,
@@ -61,7 +60,7 @@ const PORT = process.argv.PORT | 3000;
 
 async function start() {
   try {
-    await mongoose.connect(MONGO_URI, {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false});
+    await mongoose.connect(keys.MONGO_URI, {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false});
 
     app.listen(PORT, () => {
       console.log(`Server is runnig ${PORT}`);
