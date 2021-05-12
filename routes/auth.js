@@ -1,12 +1,13 @@
 const { Router } = require('express');
 const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
-const { body, validationResult} = require('express-validator/check');
+const { validationResult } = require('express-validator/check');
 const User = require('../models/user');
 const router = Router();
 const nodemailer = require('nodemailer');
 const transport = require('nodemailer-sendgrid-transport');
 const keys = require('../keys');
+const { registerValidations } = require('../utils/validators');
 
 const registerMail = require('../mails/registration');
 const resetMail = require('../mails/reset');
@@ -93,7 +94,7 @@ router.post('/login', async (req, res) => {
   }
 });
 
-router.post('/register', body('email').isEmail(), async (req, res) => {
+router.post('/register', registerValidations, async (req, res) => {
   try {
     const { email, password, name, confirm } = req.body;
 
