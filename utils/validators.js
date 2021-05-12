@@ -23,3 +23,9 @@ exports.registerValidations = [
     return true
   }),
 ]
+
+exports.courseValidations = [
+  body('title').isLength({min: 3}).withMessage('Title should have minimum 3 characters'),
+  body('price').isNumeric().withMessage('Price is incorrect').trim(),
+  body('img').isURL({min: 3}).withMessage('Image URL is incorrect').trim(),
+]

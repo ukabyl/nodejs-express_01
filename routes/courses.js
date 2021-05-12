@@ -1,6 +1,8 @@
 const {Router} = require('express');
 const authMiddleware = require('../middleware/auth');
 const Course = require('../models/course');
+const { courseValidations } = require('../utils/validators');
+const { validationResult } = require('express-validator/check');
 const router = Router();
 
 router.get('/', async (req, res) => {
@@ -34,8 +36,20 @@ router.get('/:id/edit', authMiddleware, async (req, res) => {
   } else res.redirect('/courses');
 });
 
-router.post('/edit', authMiddleware, async (req, res) => {
+router.post('/edit', authMiddleware, courseValidations, async (req, res) => {
   const { id } = req.body;
+
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.render('editCourse', {
+      title: `Edit course - ${req.body.title}`,
+      isAddCourse: true,
+      error: errors.array()[0].msg,
+      course: req.body
+    });
+  }
+
   delete req.body.id;
   await Course.findByIdAndUpdate(id, req.body);
   res.redirect('/courses');

@@ -1,23 +1,29 @@
 <h1>Add course</h1>
 
 <form method="POST" action="/addCourse">
+    {{#if error}}
+        <div class="uk-alert-danger" uk-alert>
+            <a class="uk-alert-close" uk-close></a>
+            <p>{{error}}</p>
+        </div>
+    {{/if}}
     <fieldset class="uk-fieldset">
 
         <legend class="uk-legend">Fill in the form to add your course</legend>
 
         <div class="uk-margin">
             <label class="uk-form-label" for="form-title">Title</label>
-            <input class="uk-input" required type="text" name="title" id="form-title">
+            <input class="uk-input" required type="text" name="title" id="form-title" value="{{data.title}}">
         </div>
 
         <div class="uk-margin">
             <label class="uk-form-label" for="form-price">Price</label>
-            <input class="uk-input" required type="text" name="price" id="form-price">
+            <input class="uk-input" required type="text" name="price" id="form-price" value="{{data.price}}">
         </div>
 
         <div class="uk-margin">
             <label class="uk-form-label" for="form-url">IMG URL</label>
-            <input class="uk-input" required type="text" name="img" id="form-url">
+            <input class="uk-input" required type="text" name="img" id="form-url" value="{{data.img}}">
         </div>
 
         <input type="text" hidden name="_csrf" value="{{csrf}}">
