@@ -1,6 +1,7 @@
 const { Router } = require('express');
 const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
+const { body, validationResult} = require('express-validator/check');
 const User = require('../models/user');
 const router = Router();
 const nodemailer = require('nodemailer');
@@ -92,9 +93,15 @@ router.post('/login', async (req, res) => {
   }
 });
 
-router.post('/register', async (req, res) => {
+router.post('/register', body('email').isEmail(), async (req, res) => {
   try {
     const { email, password, name, confirm } = req.body;
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      req.flash('registerError', errors.array()[0].msg);
+      res.status(422).redirect('/auth/login#register');
+    }
 
     const candidate = await User.findOne({ email });
 
