@@ -15,6 +15,7 @@ const addCourseRoutes = require('./routes/addCourse');
 const cartRoutes = require('./routes/cart');
 const ordersRoutes = require('./routes/orders');
 const authRoutes = require('./routes/auth');
+const notFoundPage = require('./middleware/notFoundPage');
 const keys = require('./keys');
 
 const store = MongoStore({
@@ -55,6 +56,8 @@ app.use('/addCourse', addCourseRoutes);
 app.use('/cart', cartRoutes);
 app.use('/orders', ordersRoutes);
 app.use('/auth', authRoutes);
+
+app.use(notFoundPage);
 
 const PORT = process.argv.PORT | 3000;
 
