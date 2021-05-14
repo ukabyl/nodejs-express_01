@@ -15,6 +15,7 @@ const addCourseRoutes = require('./routes/addCourse');
 const cartRoutes = require('./routes/cart');
 const ordersRoutes = require('./routes/orders');
 const authRoutes = require('./routes/auth');
+const profileRoutes = require('./routes/profile');
 const notFoundPage = require('./middleware/notFoundPage');
 const keys = require('./keys');
 
@@ -51,11 +52,12 @@ app.use(varialbesMiddleware);
 app.use(userMiddleware);
 
 app.use('/', homeRoutes);
+app.use('/auth', authRoutes);
 app.use('/courses', coursesRoutes);
 app.use('/addCourse', addCourseRoutes);
 app.use('/cart', cartRoutes);
 app.use('/orders', ordersRoutes);
-app.use('/auth', authRoutes);
+app.use('/profile', profileRoutes);
 
 app.use(notFoundPage);
 

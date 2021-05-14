@@ -11,6 +11,9 @@
                     <a href="/courses">Courses</a>
                 </li>
             {{#if isAuth}}
+                <li {{#isProfile}}class="uk-active"{{/isProfile}}>
+                    <a href="/profile">Profile</a>
+                </li>
                 <li {{#isAddCourse}}class="uk-active"{{/isAddCourse}}>
                     <a href="/addCourse">Add course</a>
                 </li>
