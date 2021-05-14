@@ -2,7 +2,7 @@ const {Router} = require('express');
 const authMiddleware = require('../middleware/auth');
 const Course = require('../models/course');
 const { courseValidations } = require('../utils/validators');
-const { validationResult } = require('express-validator/check');
+const { validationResult } = require('express-validator');
 const router = Router();
 
 router.get('/', async (req, res) => {

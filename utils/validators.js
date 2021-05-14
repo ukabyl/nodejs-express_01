@@ -1,4 +1,4 @@
-const { body } = require('express-validator/check');
+const { body } = require('express-validator');
 const { Promise } = require('mongoose');
 const User = require('../models/user');
 

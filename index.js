@@ -9,6 +9,8 @@ const userMiddleware = require('./middleware/user');
 const fileImageMiddleware = require('./middleware/fileImage');
 const csrf = require('csurf');
 const flash = require('connect-flash');
+const helmet = require('helmet');
+const compression = require('compression');
 
 const homeRoutes = require('./routes/home');
 const coursesRoutes = require('./routes/courses');
@@ -51,6 +53,8 @@ app.use(session({
 app.use(fileImageMiddleware.single('avatar'));
 app.use(csrf());
 app.use(flash());
+app.use(helmet());
+app.use(compression());
 app.use(varialbesMiddleware);
 app.use(userMiddleware);
 
