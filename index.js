@@ -6,6 +6,7 @@ const session = require('express-session');
 const MongoStore = require('connect-mongodb-session')(session);
 const varialbesMiddleware = require('./middleware/variables');
 const userMiddleware = require('./middleware/user');
+const fileImageMiddleware = require('./middleware/fileImage');
 const csrf = require('csurf');
 const flash = require('connect-flash');
 
@@ -39,6 +40,7 @@ app.set('view engine', 'hbs');
 app.set('views', 'views');
 
 app.use(express.static(__dirname + '/public'));
+app.use('/images', express.static(__dirname + '/images'));
 app.use(express.urlencoded({extended: true}));
 app.use(session({
   secret: keys.SESSION_SECRET,
@@ -46,6 +48,7 @@ app.use(session({
   saveUninitialized: false,
   store,
 }));
+app.use(fileImageMiddleware.single('avatar'));
 app.use(csrf());
 app.use(flash());
 app.use(varialbesMiddleware);

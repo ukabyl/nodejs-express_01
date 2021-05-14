@@ -3,18 +3,22 @@
 </div>
 <div class="uk-margin-top uk-grid uk-child-width-1-4 uk-flex-center">
   <div>
-    <div class="avatar"><img src="" alt=""></div>
-    <p class="uk-text">You don't have avatar</p>
+    {{#if user.avatarUrl}}
+      <div class="avatar"><img src="/{{user.avatarUrl}}" alt="avatar-{{user.name}}"></div>
+    {{else}}
+      <p class="uk-text">You don't have avatar</p>
+    {{/if}}
   </div>
   <div>
-    <form>
-      <div uk-form-custom>
-          <input type="file">
-          <button type="uk-button uk-button-default">Upload avatar</button>
-      </div>
+    <form method="POST" action="/profile" enctype="multipart/form-data">
+      <div uk-form-custom="target: true">
+            <input type="file" name="avatar">
+            <input class="uk-input uk-form-width-medium" type="text" placeholder="Select file" disabled>
+        </div>
       <div class="uk-margin">
-        <input class="uk-input uk-form-width-medium uk-form-small" type="text" name="name" placeholder="Name">
-    </div>
+          <input class="uk-input uk-form-width-medium uk-form-small" type="text" name="name" value="{{user.name}}" placeholder="Name">
+      </div>
+      <input type="text" hidden name="_csrf" value="{{csrf}}">
       <div class="uk-divider"></div>
       <button class="uk-button uk-button-default" type="submit">Save</button>
     </form>
